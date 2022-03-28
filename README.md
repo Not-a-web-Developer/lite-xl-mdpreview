@@ -3,7 +3,11 @@ a markdown previewer for [LiteXL](https://github.com/lite-xl/lite-xl) using [lua
 
 ## Installation
 
-clone the git repository into your lite-xl plugins folder. that's it.
+clone the git repository into your lite-xl plugins folder like so:
+```sh
+git clone https://not-a-web-developer/lite-xl-mdpreview mdpreview
+```
+that's it.
 
-**Note**: I do realise it's not exactly working at the moment, i'm still trying to figure out its issues.
+**Note**: I do realise it's not exactly working with some files at the moment, i'm still trying to figure out its issues.
 
