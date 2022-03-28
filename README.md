@@ -1,9 +1,9 @@
 # lite-xl-mdpreview
-a markdown previewer for [LiteXL](https://github.com/lite-xl/lite-xl) using [luamd](https://github.com/bakpakin/luamd).
+a markdown previewer for [LiteXL](https://github.com/lite-xl/lite-xl) using [pandoc](https://github.com/jgm/pandoc).
 
 ## Installation
 
 clone the git repository into your lite-xl plugins folder. that's it.
 
-**Note**: I do realise it's not exactly working at the moment, i'm still trying to figure out its issues.
+**Note**: it's under construction, and is incomplete. THIS DOESN'T WORK YET, IT IS NORMAL.
 
