@@ -1,5 +1,5 @@
 # lite-xl-mdpreview
-a markdown previewer for [lite-xl](https://github.com/lite-xl/lite-xl) using [luamd](https://github.com/bakpakin/luamd).
+a markdown previewer for [LiteXL](https://github.com/lite-xl/lite-xl) using [luamd](https://github.com/bakpakin/luamd).
 
 ## Installation
 

@@ -38,7 +38,12 @@ command.add("core.docview", {
   ["mdpreview:show-preview"] = function()
     local dv = core.active_view
     local mdSource = dv.doc:get_text(1, 1, math.huge, math.huge)
-    local htmlFragment = md.render(mdSource)
+    local htmlFragment, err = md.render(mdSource)
+    if not htmlFragment then
+      core.log(err)
+      return
+    end
+    
     local htmlfile = core.temp_filename(".html")
     local fp = io.open(htmlfile, "w")
     fp:write(htmlStart)
