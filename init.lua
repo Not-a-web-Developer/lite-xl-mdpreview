@@ -40,7 +40,7 @@ command.add("core.docview", {
     local mdSource = dv.doc:get_text(1, 1, math.huge, math.huge)
     local htmlFragment, err = md.render(mdSource)
     if not htmlFragment then
-      core.log(err)
+      core.error("mdpreview has a problem with your markdown file! details are as follows: " .. err)
       return
     end
     
