@@ -4,6 +4,8 @@ local command = require "core.command"
 local keymap = require "core.keymap"
 local md = require "plugins.mdpreview.md"
 
+-- the thing to be inserted before the rendered html
+
 local htmlStart = [[
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
@@ -36,19 +38,27 @@ local htmlStart = [[
 
 command.add("core.docview", {
   ["mdpreview:show-preview"] = function()
+  
+    -- getting the markdown material
     local dv = core.active_view
     local mdSource = dv.doc:get_text(1, 1, math.huge, math.huge)
+    
+    -- rendering the markdown into html
     local htmlFragment, err = md.render(mdSource)
     if not htmlFragment then
       core.error("mdpreview has a problem with your markdown file! details are as follows: " .. err)
       return
     end
     
+    -- writing the html content to a temporary file
+    
     local htmlfile = core.temp_filename(".html")
     local fp = io.open(htmlfile, "w")
     fp:write(htmlStart)
     fp:write(htmlFragment)
     fp:close()
+    
+    -- opening markdown preview (duh)
 
     core.log("Opening markdown preview...")
     if PLATFORM == "Windows" then
@@ -56,6 +66,8 @@ command.add("core.docview", {
     else
       system.exec(string.format("xdg-open %q", htmlfile))
     end
+    
+    -- deleting the temporary file
 
     core.add_thread(function()
       coroutine.yield(5)
