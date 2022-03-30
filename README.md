@@ -11,5 +11,5 @@ git clone https://not-a-web-developer/lite-xl-mdpreview mdpreview
 ```
 that's it.
 
-**Note**: I do realise it's not exactly working with some files at the moment, i'm still trying to figure out its issues.
+**Note**: There's a bug with `luamd` which causes finnicky behaviour with fenced codeblocks that don't have a language specified in them; this causes the preview to fail. if this happens to you, you can try the `pandoc` branch instead.
 
