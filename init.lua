@@ -6,26 +6,41 @@ local md = require "plugins.mdpreview.md"
 
 -- the thing to be inserted before the rendered html
 
-local htmlStart = [[
+local function script_path()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*/)")
+end
+
+local github_css = "file://" .. script_path() .. "github-markdown.css"
+
+ local htmlStart = [[
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
+<link rel="stylesheet" href="]]..github_css:gsub("\\", "/")..[[">
 <style>
-	.markdown-body {
-		box-sizing: border-box;
-		min-width: 200px;
-		max-width: 980px;
-		margin: 0 auto;
-		padding: 45px;
-	}
-
-	@media (max-width: 767px) {
-		.markdown-body {
-			padding: 15px;
-		}
-	}
+    .markdown-body {
+        box-sizing: border-box;
+        min-width: 200px;
+        max-width: 980px;
+        margin: 0 auto;
+        padding: 45px;
+    }
+    @media (max-width: 767px) {
+        .markdown-body {
+            padding: 15px;
+        }
+    }
 </style>
-<article class="markdown-body">
+</head>
+<body class="markdown-body">
+]]
 
+local htmlEnd = [[
+</body>
+</html>
 ]]
 
 --local htmlFragment = md.render([[
@@ -56,6 +71,7 @@ command.add("core.docview", {
     local fp = io.open(htmlfile, "w")
     fp:write(htmlStart)
     fp:write(htmlFragment)
+    fp:write(htmlEnd)
     fp:close()
     
     -- opening markdown preview (duh)
