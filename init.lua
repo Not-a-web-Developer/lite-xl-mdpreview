@@ -9,9 +9,20 @@ config.plugins.mdpreview = common.merge({
   pandoc_path = "pandoc"
 }, config.plugins.mdpreview)
 
+local function script_path()
+   local str = debug.getinfo(2, "S").source:sub(2)
+   return str:match("(.*/)")
+end
+
+local github_css = "file://" .. script_path() .. "github-markdown.css"
+
  local htmlStart = [[
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.1.0/github-markdown.min.css">
+<link rel="stylesheet" href="]]..github_css:gsub("\\", "/")..[[">
 <style>
     .markdown-body {
         box-sizing: border-box;
@@ -27,10 +38,15 @@ config.plugins.mdpreview = common.merge({
         }
     }
 </style>
-<article class="markdown-body">
+</head>
+<body class="markdown-body">
 
 ]]
 
+local htmlEnd = [[
+</body>
+</html>
+]]
 
 --[[local mdSource = [[
 # Hello
@@ -58,7 +74,7 @@ command.add("core.docview", {
     
     -- the actual conversion to html
     
-    local handle = io.popen(string.format("%s %q", config.plugins.mdpreview.pandoc_path, inputfile))
+    local handle = io.popen(string.format("%s %s %q", config.plugins.mdpreview.pandoc_path, "-f gfm -t html", inputfile))
     local htmlFragment = handle:read("*a")
     print(htmlFragment)
     handle:close()
@@ -76,6 +92,7 @@ command.add("core.docview", {
     local fp = io.open(htmlfile, "w")
     fp:write(htmlStart)
     fp:write(htmlFragment)
+    fp:write(htmlEnd)
     fp:close()
     
     -- opening markdown preview (duh)
