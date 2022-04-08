@@ -22,6 +22,7 @@ local github_css = "file://" .. script_path() .. "github-markdown.css"
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}}</title>
 <link rel="stylesheet" href="]]..github_css:gsub("\\", "/")..[[">
 <style>
     .markdown-body {
@@ -63,6 +64,7 @@ command.add("core.docview", {
     
     local dv = core.active_view
     local mdSource = dv.doc:get_text(1, 1, math.huge, math.huge)
+    local realhtmlStart = htmlStart:gsub("{{title}}", dv.doc.filename)
     
     -- Making a file out of the markdown material    
     
@@ -90,7 +92,7 @@ command.add("core.docview", {
     
     local htmlfile = core.temp_filename(".html")
     local fp = io.open(htmlfile, "w")
-    fp:write(htmlStart)
+    fp:write(realhtmlStart)
     fp:write(htmlFragment)
     fp:write(htmlEnd)
     fp:close()
