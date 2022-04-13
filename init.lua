@@ -5,7 +5,6 @@ local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local md = require "plugins.mdpreview.md"
-local dcvew = require "core.DocView"
 
 -- the thing to be inserted before the rendered html
 
