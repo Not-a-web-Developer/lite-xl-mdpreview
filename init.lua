@@ -1,8 +1,11 @@
--- mod-version:3 -- lite-xl 2.1
+-- mod-version:2 -- lite-xl 2.0
+-- change the mod version to 3 and lite-xl to 2.1 for compatibility with nightly releases
+
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
 local md = require "plugins.mdpreview.md"
+local dcvew = require "core.DocView"
 
 -- the thing to be inserted before the rendered html
 
@@ -20,6 +23,7 @@ local github_css = "file://" .. script_path() .. "github-markdown.css"
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="]]..github_css:gsub("\\", "/")..[[">
+<title>{{title}}</title>
 <style>
     .markdown-body {
         box-sizing: border-box;
@@ -57,7 +61,7 @@ command.add("core.docview", {
     -- getting the markdown material
     local dv = core.active_view
     local mdSource = dv.doc:get_text(1, 1, math.huge, math.huge)
-    
+    local realhtmlStart = htmlStart:gsub("{{title}}", dv:get_name() .. " preview")
     -- rendering the markdown into html
     local htmlFragment, err = md.render(mdSource)
     if not htmlFragment then
@@ -69,7 +73,7 @@ command.add("core.docview", {
     
     local htmlfile = core.temp_filename(".html")
     local fp = io.open(htmlfile, "w")
-    fp:write(htmlStart)
+    fp:write(realhtmlStart)
     fp:write(htmlFragment)
     fp:write(htmlEnd)
     fp:close()
