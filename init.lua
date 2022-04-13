@@ -1,4 +1,6 @@
--- mod-version:3 -- lite-xl 2.1
+-- mod-version:2 -- lite-xl 2.0
+-- change the mod version to 3 and lite-xl to 2.1 for compatibility with nightly releases
+
 local core = require "core"
 local command = require "core.command"
 local keymap = require "core.keymap"
@@ -64,7 +66,7 @@ command.add("core.docview", {
     
     local dv = core.active_view
     local mdSource = dv.doc:get_text(1, 1, math.huge, math.huge)
-    local realhtmlStart = htmlStart:gsub("{{title}}", dv.doc.filename)
+    local realhtmlStart = htmlStart:gsub("{{title}}", dv:get_name() .. " preview")
     
     -- Making a file out of the markdown material    
     
