@@ -1,5 +1,4 @@
--- mod-version:2 -- lite-xl 2.0
--- change the mod version to 3 and lite-xl to 2.1 for compatibility with nightly releases
+-- mod-version:3 -- lite-xl 2.1
 
 local core = require "core"
 local command = require "core.command"
